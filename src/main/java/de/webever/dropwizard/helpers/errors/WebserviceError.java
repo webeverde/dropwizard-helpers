@@ -23,9 +23,9 @@ public class WebserviceError {
     public static final WebserviceError SESSION_INVALID = new WebserviceError(100, 403, "No session for session id found");
     public static final WebserviceError REQUIRED = new WebserviceError(200, "Value is required");
     public static final WebserviceError INVALID_FORMAT = new WebserviceError(201, "Format is invalid. Expected format %s");
-    public static final WebserviceError VALUE_TO_LOW = new WebserviceError(202, "Value too low. Min value is %d");
-    public static final WebserviceError VALUE_TO_HIGH = new WebserviceError(203, "Value too high. Max value is %d");
-    public static final WebserviceError VALUE_WRONG_LENGTH = new WebserviceError(204, "Value has wrong length. Length is between %d and %d");
+    public static final WebserviceError VALUE_TO_LOW = new WebserviceError(202, "Value too low. Min value is %s");
+    public static final WebserviceError VALUE_TO_HIGH = new WebserviceError(203, "Value too high. Max value is %s");
+    public static final WebserviceError VALUE_WRONG_LENGTH = new WebserviceError(204, "Value has wrong length. Length is between %s and %s");
     public static final WebserviceError DUPLICATE = new WebserviceError(205, "Value already exists and must be unique.");
 
     private int code;
