@@ -32,7 +32,8 @@ public class WebserviceError {
 	VALUE_WRONG_LENGTH(new WebserviceError(204, "Value has wrong length. Length is between %s and %s")),
 	VALUE_TOO_LONG(new WebserviceError(205, "Value it too long. Length should not exeed %s")),
 	VALUE_TOO_SHORT(new WebserviceError(206, "Value it too short. Length should be greater than %s")),
-	DUPLICATE(new WebserviceError(210, "Value already exists and must be unique.")),;
+	DUPLICATE(new WebserviceError(210, "Value already exists and must be unique.")), 
+	UNMET_DEPENDENCY(new WebserviceError(211, "Dependency could not be resolved.")),;
 
 	private final WebserviceError error;
 
