@@ -138,6 +138,7 @@ public class WebserviceError {
 	String validation = descriptor.getAnnotation().annotationType().getSimpleName();
 	switch (validation) {
 	case "NotNull":
+	case "NotEmpty":
 	    return FIXED.REQUIRED.getContainer(field);
 	case "Pattern":
 	    return FIXED.INVALID_FORMAT.getContainer(field, descriptor.getAttributes().get("regexp"));
