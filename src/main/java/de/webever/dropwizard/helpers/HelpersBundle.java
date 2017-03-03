@@ -43,7 +43,6 @@ public abstract class HelpersBundle<T extends Configuration> implements Configur
 
 	@Override
 	public void initialize(Bootstrap<?> bootstrap) {
-		// TODO Auto-generated method stub
 
 	}
 

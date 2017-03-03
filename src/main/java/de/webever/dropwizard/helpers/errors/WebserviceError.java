@@ -30,6 +30,9 @@ public class WebserviceError implements Comparable<WebserviceError> {
 	 */
 	public static enum FIXED {
 		UNKNOWN(new WebserviceError(0, "Unknown: %s")),
+		NOT_FOUND(new WebserviceError(1, 404, "not found")),
+		FORBIDDEN(new WebserviceError(2, 403, "forbidden")),
+		BAD_REQUEST(new WebserviceError(3, "bad request")),
 		SESSION_INVALID(new WebserviceError(100, 403, "No session for session id found")),
 		REQUIRED(new WebserviceError(200, "Value is required")),
 		INVALID_FORMAT(new WebserviceError(201, "Format is invalid. Expected format %s")),
