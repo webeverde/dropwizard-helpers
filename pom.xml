@@ -4,8 +4,13 @@
 
 	<groupId>de.webever.dropwizard</groupId>
 	<artifactId>dropwizard-helpers</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1</version>
 	<packaging>jar</packaging>
+
+	<organization>
+		<name>Webever GmbH</name>
+		<url>https://www.webever.de</url>
+	</organization>
 
 	<name>dropwizard-helpers</name>
 	<url>http://maven.apache.org</url>
@@ -14,8 +19,9 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<dropwizard.version>1.0.5</dropwizard.version>
+		<dropwizard.version>1.0.6</dropwizard.version>
 	</properties>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -42,4 +48,22 @@
 			<artifactId>dropwizard-core</artifactId>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>webever.sftp.public</id>
+			<name>Webever Maven Repo</name>
+			<url>sftp://webever.de:226/maven/public</url>
+		</repository>
+	</distributionManagement>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>2.10</version>
+			</extension>
+		</extensions>
+	</build>
 </project>
