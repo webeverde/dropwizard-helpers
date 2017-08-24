@@ -24,12 +24,14 @@ public class ManagedWorkerPool implements Managed {
 	Runnable runnable;
 	int delay;
 	int interval;
+	TimeUnit timeUnit;
 
-	public IntervalQueueItem(Runnable runnable, int delay, int interval) {
+	public IntervalQueueItem(Runnable runnable, int delay, int interval, TimeUnit timeUnit) {
 	    super();
 	    this.runnable = runnable;
 	    this.delay = delay;
 	    this.interval = interval;
+	    this.timeUnit = timeUnit;
 	}
 
     }
@@ -68,12 +70,33 @@ public class ManagedWorkerPool implements Managed {
      *            the delay for first run
      * @param interval
      *            the interval to run after first delay in minutes.
+     * @param timeUnit
+     *            the timeunit fo the interval
+     */
+    public void interval(Runnable runnable, int delay, int interval, TimeUnit timeUnit) {
+	if (executor != null) {
+	    executor.scheduleAtFixedRate(runnable, delay, interval, timeUnit);
+	} else {
+	    intervalQueue.add(new IntervalQueueItem(runnable, delay, interval, timeUnit));
+	}
+    }
+
+    /**
+     * Execute a runnable every X minutes. Execution starts once the pool is
+     * started.
+     * 
+     * @param runnable
+     *            the runnabel
+     * @param delay
+     *            the delay for first run
+     * @param interval
+     *            the interval to run after first delay in minutes.
      */
     public void interval(Runnable runnable, int delay, int interval) {
 	if (executor != null) {
 	    executor.scheduleAtFixedRate(runnable, delay, interval, TimeUnit.MINUTES);
 	} else {
-	    intervalQueue.add(new IntervalQueueItem(runnable, delay, interval));
+	    intervalQueue.add(new IntervalQueueItem(runnable, delay, interval, TimeUnit.MINUTES));
 	}
     }
 
@@ -81,7 +104,7 @@ public class ManagedWorkerPool implements Managed {
     public void start() throws Exception {
 	executor = Executors.newScheduledThreadPool(2);
 	for (IntervalQueueItem intervalQueueItem : intervalQueue) {
-	    interval(intervalQueueItem.runnable, intervalQueueItem.delay, intervalQueueItem.interval);
+	    interval(intervalQueueItem.runnable, intervalQueueItem.delay, intervalQueueItem.interval, intervalQueueItem.timeUnit);
 	}
 
 	intervalQueue.clear();
