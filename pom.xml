@@ -4,7 +4,7 @@
 
 	<groupId>de.webever.dropwizard</groupId>
 	<artifactId>dropwizard-helpers</artifactId>
-	<version>1.5</version>
+	<version>1.5.1</version>
 	<packaging>jar</packaging>
 
 	<organization>
@@ -46,6 +46,11 @@
 		<dependency>
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
 		</dependency>
 	</dependencies>
 
