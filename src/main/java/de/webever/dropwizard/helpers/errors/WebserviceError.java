@@ -115,33 +115,8 @@ public class WebserviceError implements Comparable<WebserviceError> {
 	}
 	// Validation error directly on a parameter
 	if (pathComponents.size() == 2) {
-
-	    try {
-		String path0 = pathComponents.get(0);
-		Integer paramIndex = Integer.parseInt(pathComponents.get(1).substring(3));
-		Method method = null;
-		// find method and get value of annotation
-		for (Method m : constraintViolation.getRootBeanClass().getMethods()) {
-		    if (m.getName().equals(path0)) {
-			method = m;
-			break;
-		    }
-		}
-		if (method != null) {
-		    Parameter p = method.getParameters()[paramIndex];
-		    Annotation[] list = p.getAnnotations();
-		    for (Annotation annotation : list) {
-			if (annotation.annotationType().equals(FormParam.class)) {
-			    field = ((FormParam) annotation).value();
-			} else if (annotation.annotationType().equals(QueryParam.class)) {
-			    field = ((QueryParam) annotation).value();
-			} else if (annotation.annotationType().equals(PathParam.class)) {
-			    field = ((PathParam) annotation).value();
-			}
-		    }
-		}
-	    } catch (SecurityException e) {
-	    }
+	    String[] ar = pathComponents.get(1).split(" ");
+	    field = ar[ar.length - 1];
 	} else if (pathComponents.size() > 2) {
 	    // Validation error nested in object in body
 	    field = "body";
