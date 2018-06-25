@@ -1,5 +1,6 @@
 package de.webever.dropwizard.helpers.errors;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -18,11 +19,22 @@ public class WebserviceErrorContainer {
 
     private final int status;
 
-    protected WebserviceErrorContainer(String field, WebserviceError error, Object... args) {
+    public WebserviceErrorContainer(String field, WebserviceError error, Object... args) {
 	this.param = field;
 	this.description = error.getDescription(args);
 	this.errorCode = error.getCode();
 	this.status = error.getStatus();
+    }
+
+    @JsonCreator
+    public WebserviceErrorContainer(@JsonProperty("errorCode") int errorCode,
+	    @JsonProperty("description") String description, @JsonProperty("param") String param,
+	    @JsonProperty("status") int status) {
+	super();
+	this.errorCode = errorCode;
+	this.description = description;
+	this.param = param;
+	this.status = status;
     }
 
     @JsonProperty
@@ -43,6 +55,17 @@ public class WebserviceErrorContainer {
     @JsonProperty
     public String getParam() {
 	return param;
+    }
+    
+    
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+	return "WebserviceErrorContainer [errorCode=" + errorCode + ", description=" + description + ", param=" + param
+		+ ", status=" + status + "]";
     }
 
     /*

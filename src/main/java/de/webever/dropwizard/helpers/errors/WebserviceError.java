@@ -1,17 +1,11 @@
 package de.webever.dropwizard.helpers.errors;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Path.Node;
 import javax.validation.metadata.ConstraintDescriptor;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 
 /**
  * An object to wrap error information for the frontend. Converts Dropwizard
