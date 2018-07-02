@@ -18,47 +18,54 @@ import de.webever.dropwizard.helpers.errors.WebserviceException;
 @Produces({ MediaTypeUTF8.APPLICATION_JSON })
 public abstract class AbstractResoure {
 
-	private static <T> T throwException(WebserviceError.FIXED error) {
-		throw new WebserviceException(error.getContainer(""));
-	}
+    private static <T> T throwException(WebserviceError.FIXED error, String field) {
+	throw new WebserviceException(error.getContainer(field));
+    }
 
-	/**
-	 * throw 403
-	 * 
-	 * @return nothing ever
-	 */
-	protected static <T> T forbidden() {
-		return throwException(WebserviceError.FIXED.FORBIDDEN);
+    /**
+     * throw 403
+     * 
+     * @return nothing ever
+     */
+    protected static <T> T forbidden() {
+	return throwException(WebserviceError.FIXED.FORBIDDEN, "");
 
-	}
+    }
 
-	/**
-	 * throw 404 * @return nothing ever
-	 */
-	protected static <T> T notFound() {
-		return throwException(WebserviceError.FIXED.NOT_FOUND);
-	}
+    /**
+     * throw 404 * @return nothing ever
+     */
+    protected static <T> T notFound() {
+	return throwException(WebserviceError.FIXED.NOT_FOUND, "");
+    }
 
-	/**
-	 * throw 400
-	 * 
-	 * @return nothing ever
-	 */
-	protected static <T> T badRequest() {
+    /**
+     * throw 404 * @return nothing ever
+     */
+    protected static <T> T notFound(String field) {
+	return throwException(WebserviceError.FIXED.NOT_FOUND, field);
+    }
 
-		return throwException(WebserviceError.FIXED.BAD_REQUEST);
-	}
+    /**
+     * throw 400
+     * 
+     * @return nothing ever
+     */
+    protected static <T> T badRequest() {
 
-	/**
-	 * throw 404 if o == null
-	 * 
-	 * @param o
-	 *            Object to check
-	 * 
-	 */
-	protected static void notFoundIfNull(Object o) {
-		if (o == null)
-			notFound();
-	}
+	return throwException(WebserviceError.FIXED.BAD_REQUEST, "");
+    }
+
+    /**
+     * throw 404 if o == null
+     * 
+     * @param o
+     *            Object to check
+     * 
+     */
+    protected static void notFoundIfNull(Object o, String field) {
+	if (o == null)
+	    notFound(field);
+    }
 
 }
