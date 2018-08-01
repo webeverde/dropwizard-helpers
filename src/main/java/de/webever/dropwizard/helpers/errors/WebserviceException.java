@@ -33,7 +33,9 @@ public class WebserviceException extends WebApplicationException {
     }
 
     public void addError(WebserviceErrorContainer error) {
-	errors.add(error);
+	if (!errors.contains(error)) {
+	    errors.add(error);
+	}
     }
 
     @Override
