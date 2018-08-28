@@ -27,6 +27,7 @@ public class WebserviceError implements Comparable<WebserviceError> {
 	NOT_FOUND(new WebserviceError(1, 404, "not found")),
 	FORBIDDEN(new WebserviceError(2, 403, "forbidden")),
 	BAD_REQUEST(new WebserviceError(3, "bad request")),
+	INTERNAL_ERROR(new WebserviceError(5, 500, "internal error")),
 	SESSION_INVALID(new WebserviceError(100, 403, "No session for session id found")),
 	REQUIRED(new WebserviceError(200, "Value is required")),
 	INVALID_FORMAT(new WebserviceError(201, "Format is invalid. Expected format %s")),
@@ -37,7 +38,7 @@ public class WebserviceError implements Comparable<WebserviceError> {
 	VALUE_TOO_SHORT(new WebserviceError(206, "Value it too short. Length should be greater than %s")),
 	DUPLICATE(new WebserviceError(210, "Value already exists and must be unique.")),
 	UNMET_DEPENDENCY(new WebserviceError(211, "Dependency could not be resolved.")),
-	CONSTRAINT_VIOLATION(new WebserviceError(212, "A constraint was violated by this action. %s")),;
+	CONSTRAINT_VIOLATION(new WebserviceError(212, "A constraint was violated by this action. %s"));
 
 	private final WebserviceError error;
 

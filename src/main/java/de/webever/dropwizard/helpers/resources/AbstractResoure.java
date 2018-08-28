@@ -23,7 +23,8 @@ public abstract class AbstractResoure {
     }
 
     /**
-     * throw 403
+     * @param <T>
+     *            anything throw 403
      * 
      * @return nothing ever
      */
@@ -33,21 +34,25 @@ public abstract class AbstractResoure {
     }
 
     /**
-     * throw 404 * @return nothing ever
+     * @param <T>
+     *            anything throw 404 * @return nothing ever
      */
     protected static <T> T notFound() {
 	return throwException(WebserviceError.FIXED.NOT_FOUND, "");
     }
 
     /**
-     * throw 404 * @return nothing ever
+     * @param <T>
+     *            anything throw 404 * @return nothing ever
      */
     protected static <T> T notFound(String field) {
 	return throwException(WebserviceError.FIXED.NOT_FOUND, field);
     }
 
     /**
-     * throw 400
+     * 
+     * @param <T>
+     *            anything throw 400
      * 
      * @return nothing ever
      */
@@ -57,7 +62,8 @@ public abstract class AbstractResoure {
     }
 
     /**
-     * throw 404 if o == null
+     * @param <T>
+     *            anything throw 404 if o == null
      * 
      * @param o
      *            Object to check
