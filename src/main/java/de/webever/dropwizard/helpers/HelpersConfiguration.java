@@ -8,4 +8,11 @@ public class HelpersConfiguration extends Configuration {
     
     @JsonProperty("corsOrigin")
     public String corsOrigin = "*";
+    
+    @JsonProperty("useTimestamps")
+    public boolean useTimestamps = false; 
+    
+    @JsonProperty("dateFormat")
+    public String dateFormat; 
+    
 }
