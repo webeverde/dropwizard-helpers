@@ -8,6 +8,7 @@ import javax.servlet.FilterRegistration.Dynamic;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 
 import de.webever.dropwizard.helpers.errors.WebserviceExceptionMapper;
+import de.webever.dropwizard.helpers.providers.ClientAbortExceptionWriterInterceptor;
 import de.webever.dropwizard.helpers.providers.HelperObjectMapperProvider;
 import io.dropwizard.Configuration;
 import io.dropwizard.ConfiguredBundle;
@@ -33,6 +34,10 @@ public abstract class HelpersBundle<T extends Configuration> implements Configur
 	if (!helpersConfiguration.useTimestamps) {
 	    environment.jersey().register(
 		    new HelperObjectMapperProvider(environment.getObjectMapper(), helpersConfiguration.dateFormat));
+	}
+
+	if (helpersConfiguration.ignoreAbortedExceptions) {
+	    environment.jersey().register(new ClientAbortExceptionWriterInterceptor());
 	}
 
 	Dynamic filter = environment.servlets().addFilter("CORS", CrossOriginFilter.class);
