@@ -15,4 +15,6 @@ public class HelpersConfiguration extends Configuration {
     @JsonProperty("dateFormat")
     public String dateFormat; 
     
+    @JsonProperty("ignoreAbortedExceptions")
+    public boolean ignoreAbortedExceptions = true;
 }
