@@ -1,5 +1,7 @@
 package de.webever.dropwizard.helpers.errors;
 
+import java.util.HashMap;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,22 +21,30 @@ public class WebserviceErrorContainer {
 
     private final int status;
 
-    public WebserviceErrorContainer(String field, WebserviceError error, Object... args) {
+    private final HashMap<String, String> data;
+
+    public WebserviceErrorContainer(String field, WebserviceError error, Object[] args) {
+	this(field, error, null, args);
+    }
+
+    public WebserviceErrorContainer(String field, WebserviceError error, HashMap<String, String> data, Object... args) {
 	this.param = field;
 	this.description = error.getDescription(args);
 	this.errorCode = error.getCode();
 	this.status = error.getStatus();
+	this.data = data;
     }
 
     @JsonCreator
     public WebserviceErrorContainer(@JsonProperty("errorCode") int errorCode,
 	    @JsonProperty("description") String description, @JsonProperty("param") String param,
-	    @JsonProperty("status") int status) {
+	    @JsonProperty("status") int status, @JsonProperty("status") HashMap<String, String> data) {
 	super();
 	this.errorCode = errorCode;
 	this.description = description;
 	this.param = param;
 	this.status = status;
+	this.data = data;
     }
 
     @JsonProperty
@@ -56,10 +66,10 @@ public class WebserviceErrorContainer {
     public String getParam() {
 	return param;
     }
-    
-    
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see java.lang.Object#toString()
      */
     @Override
@@ -110,6 +120,10 @@ public class WebserviceErrorContainer {
 	    return false;
 	}
 	return true;
+    }
+
+    public HashMap<String, String> getData() {
+	return data;
     }
 
 }

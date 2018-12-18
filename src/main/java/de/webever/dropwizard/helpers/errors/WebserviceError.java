@@ -1,6 +1,7 @@
 package de.webever.dropwizard.helpers.errors;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.validation.ConstraintViolation;
@@ -23,22 +24,22 @@ public class WebserviceError implements Comparable<WebserviceError> {
      *
      */
     public static enum FIXED {
-	UNKNOWN(new WebserviceError(0, "Unknown: %s")),
-	NOT_FOUND(new WebserviceError(1, 404, "not found")),
-	FORBIDDEN(new WebserviceError(2, 403, "forbidden")),
-	BAD_REQUEST(new WebserviceError(3, "bad request")),
-	INTERNAL_ERROR(new WebserviceError(5, 500, "internal error")),
-	SESSION_INVALID(new WebserviceError(100, 403, "No session for session id found")),
-	REQUIRED(new WebserviceError(200, "Value is required")),
-	INVALID_FORMAT(new WebserviceError(201, "Format is invalid. Expected format %s")),
-	VALUE_TO_LOW(new WebserviceError(202, "Value too low. Min value is %s")),
-	VALUE_TO_HIGH(new WebserviceError(203, "Value too high. Max value is %s")),
-	VALUE_WRONG_LENGTH(new WebserviceError(204, "Value has wrong length. Length is between %s and %s")),
-	VALUE_TOO_LONG(new WebserviceError(205, "Value it too long. Length should not exeed %s")),
-	VALUE_TOO_SHORT(new WebserviceError(206, "Value it too short. Length should be greater than %s")),
-	DUPLICATE(new WebserviceError(210, "Value already exists and must be unique.")),
-	UNMET_DEPENDENCY(new WebserviceError(211, "Dependency could not be resolved.")),
-	CONSTRAINT_VIOLATION(new WebserviceError(212, "A constraint was violated by this action. %s"));
+    UNKNOWN(new WebserviceError(0, "Unknown: %s")),
+    NOT_FOUND(new WebserviceError(1, 404, "not found")),
+    FORBIDDEN(new WebserviceError(2, 403, "forbidden")),
+    BAD_REQUEST(new WebserviceError(3, "bad request")),
+    INTERNAL_ERROR(new WebserviceError(5, 500, "internal error")),
+    SESSION_INVALID(new WebserviceError(100, 403, "No session for session id found")),
+    REQUIRED(new WebserviceError(200, "Value is required")),
+    INVALID_FORMAT(new WebserviceError(201, "Format is invalid. Expected format %s")),
+    VALUE_TO_LOW(new WebserviceError(202, "Value too low. Min value is %s")),
+    VALUE_TO_HIGH(new WebserviceError(203, "Value too high. Max value is %s")),
+    VALUE_WRONG_LENGTH(new WebserviceError(204, "Value has wrong length. Length is between %s and %s")),
+    VALUE_TOO_LONG(new WebserviceError(205, "Value it too long. Length should not exeed %s")),
+    VALUE_TOO_SHORT(new WebserviceError(206, "Value it too short. Length should be greater than %s")),
+    DUPLICATE(new WebserviceError(210, "Value already exists and must be unique.")),
+    UNMET_DEPENDENCY(new WebserviceError(211, "Dependency could not be resolved.")),
+    CONSTRAINT_VIOLATION(new WebserviceError(212, "A constraint was violated by this action. %s"));
 
 	private final WebserviceError error;
 
@@ -52,6 +53,10 @@ public class WebserviceError implements Comparable<WebserviceError> {
 
 	public WebserviceErrorContainer getContainer(String field, Object... args) {
 	    return getError().getContainer(field, args);
+	}
+
+	public WebserviceErrorContainer getContainer(String field, HashMap<String, String> data, Object... args) {
+	    return getError().getContainerWithData(field, data, args);
 	}
 
     }
@@ -91,6 +96,10 @@ public class WebserviceError implements Comparable<WebserviceError> {
 
     public WebserviceErrorContainer getContainer(String field, Object... args) {
 	return new WebserviceErrorContainer(field, this, args);
+    }
+
+    public WebserviceErrorContainer getContainerWithData(String field, HashMap<String, String> data, Object... args) {
+	return new WebserviceErrorContainer(field, this, data, args);
     }
 
     /**
