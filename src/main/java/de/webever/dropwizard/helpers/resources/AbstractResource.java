@@ -16,7 +16,7 @@ import de.webever.dropwizard.helpers.errors.WebserviceException;
  */
 @Consumes({ MediaType.APPLICATION_JSON })
 @Produces({ MediaTypeUTF8.APPLICATION_JSON })
-public abstract class AbstractResoure {
+public abstract class AbstractResource {
 
     private static <T> T throwException(WebserviceError.FIXED error, String field) {
 	throw new WebserviceException(error.getContainer(field));
