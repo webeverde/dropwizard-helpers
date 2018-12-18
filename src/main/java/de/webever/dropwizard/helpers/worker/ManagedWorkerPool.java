@@ -140,9 +140,9 @@ public class ManagedWorkerPool implements Managed {
     public void onceADayAt(Runnable runnable, int hours, int minutes) {
 	DateTime now = new DateTime();
 	DateTime next = now.withHourOfDay(hours);
-	next = now.withMinuteOfHour(minutes);
+	next = next.withMinuteOfHour(minutes);
 	if (next.isBefore(now)) {
-	    next.plusDays(1);
+	    next = next.plusDays(1);
 	}
 	long millis = next.getMillis() - now.getMillis();
 	long interval = 24 * 60 * 60 * 1000;
