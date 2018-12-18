@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,11 +23,11 @@ public class ManagedWorkerPool implements Managed {
 
     private static class IntervalQueueItem {
 	Runnable runnable;
-	int delay;
-	int interval;
+	long delay;
+	long interval;
 	TimeUnit timeUnit;
 
-	public IntervalQueueItem(Runnable runnable, int delay, int interval, TimeUnit timeUnit) {
+	public IntervalQueueItem(Runnable runnable, long delay, long interval, TimeUnit timeUnit) {
 	    super();
 	    this.runnable = runnable;
 	    this.delay = delay;
@@ -73,7 +74,7 @@ public class ManagedWorkerPool implements Managed {
      * @param timeUnit
      *            the timeunit fo the interval
      */
-    public void interval(Runnable runnable, int delay, int interval, TimeUnit timeUnit) {
+    public void interval(Runnable runnable, long delay, long interval, TimeUnit timeUnit) {
 	if (executor != null) {
 	    executor.scheduleAtFixedRate(runnable, delay, interval, timeUnit);
 	} else {
@@ -92,7 +93,7 @@ public class ManagedWorkerPool implements Managed {
      * @param interval
      *            the interval to run after first delay in minutes.
      */
-    public void interval(Runnable runnable, int delay, int interval) {
+    public void interval(Runnable runnable, long delay, long interval) {
 	if (executor != null) {
 	    executor.scheduleAtFixedRate(runnable, delay, interval, TimeUnit.MINUTES);
 	} else {
@@ -100,11 +101,61 @@ public class ManagedWorkerPool implements Managed {
 	}
     }
 
+    /**
+     * Execute a runnable in an interval. Starts at time specified by hours and
+     * minutes.
+     * 
+     * @param runnable
+     *            the runnable
+     * @param hours
+     *            the hours of first execution
+     * @param minutes
+     *            the minuts of first execution
+     * @param interval
+     *            the interval to execute in, in milliseconds.
+     */
+    public void at(Runnable runnable, int hours, int minutes, long interval) {
+	DateTime now = new DateTime();
+	DateTime next = now.withHourOfDay(hours);
+	next = now.withMinuteOfHour(minutes);
+	if (next.isBefore(now)) {
+	    next.plusDays(1);
+	}
+	long millis = next.getMillis() - now.getMillis();
+	interval(runnable, millis, interval, TimeUnit.MILLISECONDS);
+
+    }
+
+    /**
+     * Execute a runnable every 24 hours. Starts at time specified by hours and
+     * minutes.
+     * 
+     * @param runnable
+     *            the runnable
+     * @param hours
+     *            the hours of first execution
+     * @param minutes
+     *            the minuts of first execution
+     */
+    public void onceADayAt(Runnable runnable, int hours, int minutes) {
+	DateTime now = new DateTime();
+	DateTime next = now.withHourOfDay(hours);
+	next = now.withMinuteOfHour(minutes);
+	if (next.isBefore(now)) {
+	    next.plusDays(1);
+	}
+	long millis = next.getMillis() - now.getMillis();
+	long interval = 24 * 60 * 60 * 1000;
+	interval(runnable, millis, interval, TimeUnit.MILLISECONDS);
+
+    }
+
     @Override
     public void start() throws Exception {
 	executor = Executors.newScheduledThreadPool(2);
 	for (IntervalQueueItem intervalQueueItem : intervalQueue) {
-	    interval(intervalQueueItem.runnable, intervalQueueItem.delay, intervalQueueItem.interval, intervalQueueItem.timeUnit);
+	    interval(intervalQueueItem.runnable, intervalQueueItem.delay, intervalQueueItem.interval,
+		    intervalQueueItem.timeUnit);
 	}
 
 	intervalQueue.clear();
