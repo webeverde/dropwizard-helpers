@@ -38,7 +38,7 @@ public class WebserviceErrorContainer {
     @JsonCreator
     public WebserviceErrorContainer(@JsonProperty("errorCode") int errorCode,
 	    @JsonProperty("description") String description, @JsonProperty("param") String param,
-	    @JsonProperty("status") int status, @JsonProperty("status") HashMap<String, String> data) {
+	    @JsonProperty("status") int status, @JsonProperty("data") HashMap<String, String> data) {
 	super();
 	this.errorCode = errorCode;
 	this.description = description;
