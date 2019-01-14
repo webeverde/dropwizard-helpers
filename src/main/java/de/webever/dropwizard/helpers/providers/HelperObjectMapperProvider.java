@@ -19,7 +19,7 @@ public class HelperObjectMapperProvider implements ContextResolver<ObjectMapper>
 	    this.objectMapper.setDateFormat(new SimpleDateFormat(dateFormat));
 	}
 	/* We want dates to be treated as ISO8601 not timestamps. */
-	objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+	this.objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
     }
 
     @Override
